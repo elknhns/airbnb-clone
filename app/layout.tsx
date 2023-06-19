@@ -1,9 +1,13 @@
-import { Inter, Nunito } from 'next/font/google';
+import { Nunito } from 'next/font/google';
 
-import Navbar from './components/Navbar';
+
+import Navbar from './components/navbar/Navbar';
+import RegisterModal from './components/modals/RegisterModal';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+type RootLayoutProps = {
+	children: React.ReactNode;
+};
 
 export const metadata = {
 	title: 'Airbnb',
@@ -12,17 +16,14 @@ export const metadata = {
 
 const nunito = Nunito({ subsets: ['latin'] });
 
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
-	return (
-		<html lang='en'>
-			<body className={nunito.className}>
-				<Navbar />
-				{children}
-			</body>
-		</html>
-	);
-}
+const RootLayout = ({ children }: RootLayoutProps) => (
+	<html lang='en'>
+		<body className={nunito.className}>
+			<RegisterModal />
+			<Navbar />
+			{children}
+		</body>
+	</html>
+);
+
+export default RootLayout;
