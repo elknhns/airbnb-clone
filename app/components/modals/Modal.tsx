@@ -19,19 +19,18 @@ type ModalProps = {
 	secondaryActionLabel?: string;
 };
 
-export default function Modal(props: ModalProps) {
-	const {
-		actionLabel,
-		body,
-		disabled,
-		isOpen,
-		onClose,
-		onSubmit,
-		secondaryAction,
-		secondaryActionLabel,
-		title,
-	} = props;
-
+export default function Modal({
+	actionLabel,
+	body,
+	disabled,
+	footer,
+	isOpen,
+	onClose,
+	onSubmit,
+	secondaryAction,
+	secondaryActionLabel,
+	title,
+}: ModalProps) {
 	const [showModal, setShowModal] = useState(isOpen);
 
 	const handleClose = () => {
@@ -40,8 +39,6 @@ export default function Modal(props: ModalProps) {
 		setShowModal(false);
 		setTimeout(onClose, 300);
 	};
-
-	const handleSubmit = () => disabled || onSubmit();
 
 	const handleSecondaryAction = () => disabled || secondaryAction?.();
 
@@ -90,9 +87,11 @@ export default function Modal(props: ModalProps) {
 									<Button
 										label={actionLabel}
 										disabled={disabled}
-										onClick={handleSubmit}
+										onClick={() => disabled || onSubmit()}
 									/>
 								</div>
+
+								{footer}
 							</div>
 						</div>
 					</div>

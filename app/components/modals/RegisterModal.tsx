@@ -1,24 +1,24 @@
 'use client';
 
+import { AiFillGithub } from 'react-icons/ai';
+import { FcGoogle } from 'react-icons/fc';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useState } from 'react';
-
+import { toast } from 'react-hot-toast';
 import axios from 'axios';
+
+import Button from '../Button';
 import Heading from '../Heading';
+import Input from '../inputs/Input';
 import Modal from './Modal';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
-import Input from '../inputs/Input';
 
 export default function RegisterModal() {
 	const registerModal = useRegisterModal();
-	const [isLoading, setIsLoading] = useState(false);
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<FieldValues>({
+	const form = useForm<FieldValues>({
 		defaultValues: { name: '', email: '', password: '' },
 	});
+	const [isLoading, setIsLoading] = useState(false);
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		setIsLoading(true);
@@ -27,7 +27,7 @@ export default function RegisterModal() {
 			await axios.post('/api/register', data);
 			registerModal.onClose();
 		} catch (error) {
-			console.log(error);
+			toast.error('Something went wrong');
 		} finally {
 			setIsLoading(false);
 		}
@@ -42,8 +42,8 @@ export default function RegisterModal() {
 				label='Email'
 				type='email'
 				disabled={isLoading}
-				register={register}
-				errors={errors}
+				register={form.register}
+				errors={form.formState.errors}
 				required
 			/>
 
@@ -51,8 +51,8 @@ export default function RegisterModal() {
 				id='name'
 				label='Name'
 				disabled={isLoading}
-				register={register}
-				errors={errors}
+				register={form.register}
+				errors={form.formState.errors}
 				required
 			/>
 
@@ -61,10 +61,40 @@ export default function RegisterModal() {
 				label='Password'
 				type='password'
 				disabled={isLoading}
-				register={register}
-				errors={errors}
+				register={form.register}
+				errors={form.formState.errors}
 				required
 			/>
+		</div>
+	);
+
+	const footerContent = (
+		<div className='flex flex-col gap-4 mt-3'>
+			<hr />
+
+			<Button
+				outline
+				label='Continue with Google'
+				icon={FcGoogle}
+				onClick={() => {}}
+			/>
+
+			<Button
+				outline
+				label='Continue with Github'
+				icon={AiFillGithub}
+				onClick={() => {}}
+			/>
+
+			<div className='text-neutral-500 mt-4 font-light'>
+				<div className='flex flex-row items-center justify-center gap-2'>
+					<span>Already have an account?</span>
+
+					<div onClick={registerModal.onClose} className='text-neutral-800 cursor-pointer hover:underline'>
+						Log in
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 
@@ -75,8 +105,9 @@ export default function RegisterModal() {
 			title='Register'
 			actionLabel='Continue'
 			onClose={registerModal.onClose}
-			onSubmit={handleSubmit(onSubmit)}
+			onSubmit={form.handleSubmit(onSubmit)}
 			body={bodyContent}
+			footer={footerContent}
 		/>
 	);
 }
