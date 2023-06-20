@@ -40,7 +40,8 @@ const Input = ({
 			placeholder=' '
 			type={type}
 			className={classNames(
-				'peer w-full p-4 pt-6 font-light bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed',
+				'peer w-full p-4 pt-6 font-light bg-white border-2 rounded-md outline-none',
+				'transition disabled:opacity-70 disabled:cursor-not-allowed',
 				{
 					'pl-9': formatPrice,
 					'pl-4': !formatPrice,
@@ -52,7 +53,8 @@ const Input = ({
 		<label
 			htmlFor={id}
 			className={classNames(
-				'absolute text-md duration-150 transform -translate-y-4 top-5 z-10 origin-[0] scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4',
+				'absolute text-md duration-150 transform -translate-y-4 top-5 z-10 origin-[0] scale-75',
+				'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4',
 				{
 					'left-9': formatPrice,
 					'left-4': !formatPrice,

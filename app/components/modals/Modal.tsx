@@ -2,9 +2,9 @@
 
 import { IoMdClose } from 'react-icons/io';
 import { ReactElement, useEffect, useState } from 'react';
+import classNames from 'classnames';
 
 import Button from '../Button';
-import classNames from 'classnames';
 
 type ModalProps = {
 	onClose: () => void;
