@@ -1,13 +1,16 @@
 'use client';
 import Image from 'next/image';
 
-const Avatar = () => (
+type AvatarProps = { src?: string | null };
+
+const Avatar = ({ src }: AvatarProps) => (
 	<Image
 		className='rounded-full'
 		height={30}
 		width={30}
 		alt='Avatar'
-		src='/images/placeholder.jpg' />
+		src={src ?? '/images/placeholder.jpg'}
+	/>
 );
 
 export default Avatar;

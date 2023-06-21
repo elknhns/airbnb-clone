@@ -1,10 +1,11 @@
 'use client';
 
 import { IoMdClose } from 'react-icons/io';
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, cloneElement, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import Button from '../Button';
+import { useFormInputContext } from '@/app/hooks/useFormInputContext';
 
 type ModalProps = {
 	onClose: () => void;
@@ -14,7 +15,6 @@ type ModalProps = {
 	title?: string;
 	body?: ReactElement;
 	footer?: ReactElement;
-	disabled?: boolean;
 	secondaryAction?: () => void;
 	secondaryActionLabel?: string;
 };
@@ -22,7 +22,6 @@ type ModalProps = {
 export default function Modal({
 	actionLabel,
 	body,
-	disabled,
 	footer,
 	isOpen,
 	onClose,
@@ -31,6 +30,7 @@ export default function Modal({
 	secondaryActionLabel,
 	title,
 }: ModalProps) {
+	const { disabled } = useFormInputContext();
 	const [showModal, setShowModal] = useState(isOpen);
 
 	const handleClose = () => {
@@ -70,7 +70,9 @@ export default function Modal({
 								</div>
 							</div>
 
-							<div className='relative p-6 flex-auto'>{body}</div>
+							<div className='relative p-6 flex-auto'>
+								{body}
+							</div>
 
 							<div className='flex flex-col gap-2 p-6'>
 								<div className='flex flex-row items-center gap-4 w-full'>
