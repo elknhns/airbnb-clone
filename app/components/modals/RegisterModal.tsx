@@ -9,6 +9,7 @@ import { FormInputContext } from '@/app/hooks/useFormInputContext';
 import AuthForm from './AuthForm';
 import Footer from './Footer';
 import Modal from './Modal';
+import useLoginModal from '@/app/hooks/useLoginModal';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 
 const body = (
@@ -31,6 +32,7 @@ const body = (
 
 export default function RegisterModal() {
 	const registerModal = useRegisterModal();
+	const loginModal = useLoginModal();
 	const form = useForm<FieldValues>({
 		defaultValues: { name: '', email: '', password: '' },
 	});
@@ -49,6 +51,19 @@ export default function RegisterModal() {
 		}
 	};
 
+	const moveToLogin = () => {
+		registerModal.onClose();
+		loginModal.onOpen();
+	};
+
+	const footer = (
+		<Footer
+			question='Already have an account?'
+			actionLabel='Log in'
+			onClick={moveToLogin}
+		/>
+	);
+
 	return (
 		<FormInputContext.Provider
 			value={{
@@ -64,7 +79,7 @@ export default function RegisterModal() {
 				onClose={registerModal.onClose}
 				onSubmit={form.handleSubmit(onSubmit)}
 				body={body}
-				footer={<Footer />}
+				footer={footer}
 			/>
 		</FormInputContext.Provider>
 	);

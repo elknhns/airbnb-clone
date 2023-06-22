@@ -7,6 +7,12 @@ import { useFormInputContext } from '@/app/hooks/useFormInputContext';
 import Button from '../Button';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 
+type FooterProps = {
+	actionLabel: string;
+	question: string;
+	onClick: () => void;
+};
+
 type OAuthButton = {
 	label: string;
 	icon: IconType;
@@ -22,8 +28,11 @@ const buttons: OAuthButton[] = [
 	},
 ];
 
-export default function Footer() {
-	const registerModal = useRegisterModal();
+export default function Footer({
+	actionLabel,
+	question,
+	onClick,
+}: FooterProps) {
 	const { disabled } = useFormInputContext();
 
 	return (
@@ -42,13 +51,13 @@ export default function Footer() {
 
 			<div className='text-neutral-500 mt-4 font-light'>
 				<div className='flex flex-row items-center justify-center gap-2'>
-					<span>Already have an account?</span>
+					<span>{question}</span>
 
 					<div
-						onClick={registerModal.onClose}
+						onClick={onClick}
 						className='text-neutral-800 cursor-pointer hover:underline'
 					>
-						Log in
+						{actionLabel}
 					</div>
 				</div>
 			</div>

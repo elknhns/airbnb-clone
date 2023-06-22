@@ -11,6 +11,7 @@ import AuthForm from './AuthForm';
 import Footer from './Footer';
 import Modal from './Modal';
 import useLoginModal from '@/app/hooks/useLoginModal';
+import useRegisterModal from '@/app/hooks/useRegisterModal';
 
 const body = (
 	<AuthForm
@@ -32,6 +33,7 @@ const body = (
 export default function LoginModal() {
 	const router = useRouter();
 	const loginModal = useLoginModal();
+	const registerModal = useRegisterModal();
 	const form = useForm<FieldValues>({
 		defaultValues: { email: '', password: '' },
 	});
@@ -56,6 +58,19 @@ export default function LoginModal() {
 		setIsLoading(false);
 	};
 
+	const moveToRegister = () => {
+		loginModal.onClose();
+		registerModal.onOpen();
+	};
+
+	const footer = (
+		<Footer
+			question='First time using Airbnb?'
+			actionLabel='Create an account'
+			onClick={moveToRegister}
+		/>
+	);
+
 	return (
 		<FormInputContext.Provider
 			value={{
@@ -71,7 +86,7 @@ export default function LoginModal() {
 				onClose={loginModal.onClose}
 				onSubmit={form.handleSubmit(onSubmit)}
 				body={body}
-				footer={<Footer />}
+				footer={footer}
 			/>
 		</FormInputContext.Provider>
 	);
