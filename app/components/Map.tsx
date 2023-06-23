@@ -1,5 +1,4 @@
 'use client';
-
 import { MapContainer, Marker, TileLayer } from 'react-leaflet';
 import L from 'leaflet';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -17,16 +16,16 @@ L.Icon.Default.mergeOptions({
 	shadowUrl: markerShadow.src,
 });
 
-export default function Map({ center = [51, -0.09] }: MapProps) {
-	return (
-		<MapContainer
-			center={center}
-			zoom={center ? 4 : 2}
-			scrollWheelZoom={false}
-			className='h-[35vh] rounded-lg'
-		>
-			<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-			<Marker position={center} />
-		</MapContainer>
-	);
-}
+const Map = ({ center = [51, -0.09] }: MapProps) => (
+	<MapContainer
+		center={center}
+		zoom={center ? 4 : 2}
+		scrollWheelZoom={false}
+		className='h-[35vh] rounded-lg'
+	>
+		<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+		<Marker position={center} />
+	</MapContainer>
+);
+
+export default Map;

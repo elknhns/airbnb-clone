@@ -1,15 +1,17 @@
 'use client';
 
 import { FieldValues, useForm } from 'react-hook-form';
-import { ReactElement, useMemo, useState } from 'react';
+import { Fragment, ReactElement, useMemo, useState } from 'react';
+import dynamic from 'next/dynamic';
 
 import { categories } from '../navbar/Categories';
+import Counter from '../inputs/Counter';
 import CategoryInput from '../inputs/CategoryInput';
 import CountrySelect from '../inputs/CountrySelect';
 import Heading from '../Heading';
+import ImageUpload from '../inputs/ImageUpload';
 import Modal from './Modal';
 import useRentModal from '@/app/hooks/useRentModal';
-import dynamic from 'next/dynamic';
 
 enum STEPS {
 	CATEGORY,
@@ -57,6 +59,24 @@ export default function RentModal() {
 		[selectedLocation]
 	);
 
+	const counters: { title: string; subtitle: string; fieldName: string }[] = [
+		{
+			title: 'Guests',
+			subtitle: 'How many guests do you allow?',
+			fieldName: 'guestCount',
+		},
+		{
+			title: 'Rooms',
+			subtitle: 'How many rooms do you have?',
+			fieldName: 'roomCount',
+		},
+		{
+			title: 'Bathrooms',
+			subtitle: 'How many bathrooms do you have?',
+			fieldName: 'bathroomCount',
+		},
+	];
+
 	const categoryBody = (
 		<div className='flex flex-col gap-8'>
 			<Heading
@@ -91,14 +111,54 @@ export default function RentModal() {
 					value={selectedLocation}
 					onChange={(value) => setCustomValue('location', value)}
 				/>
+
 				<Map center={selectedLocation?.latlng} />
 			</div>
+		</div>
+	);
+
+	const infoBody = (
+		<div className='flex flex-col gap-8'>
+			<Heading
+				title='Share some basics about your place'
+				subtitle='What amenities do you have?'
+			/>
+
+			{counters.map(({ fieldName, ...rest }, index) => (
+				<Fragment key={fieldName}>
+					{index !== 0 && <hr />}
+
+					<Counter
+						value={form.watch(fieldName)}
+						onChange={(value) => setCustomValue(fieldName, value)}
+						{...rest}
+					/>
+				</Fragment>
+			))}
+		</div>
+	);
+
+	const imagesBody = (
+		<div className='flex flex-col gap-8'>
+			<Heading
+				title='Add a photo of your place'
+				subtitle='Show guests what your place looks like!'
+			/>
+
+			<ImageUpload
+				value={form.watch('imageSrc')}
+				onChange={(value) => setCustomValue('imageSrc', value)}
+			/>
 		</div>
 	);
 
 	const stepBody: Record<STEPS, ReactElement> = {
 		[STEPS.CATEGORY]: categoryBody,
 		[STEPS.LOCATION]: locationBody,
+		[STEPS.INFO]: infoBody,
+		[STEPS.IMAGES]: imagesBody,
+		[STEPS.DESCRIPTION]: <div>Coming soon</div>,
+		[STEPS.PRICE]: <div>Coming soon</div>,
 	};
 
 	return (
