@@ -3,12 +3,11 @@ import { FcGoogle } from 'react-icons/fc';
 import { IconType } from 'react-icons';
 import { signIn } from 'next-auth/react';
 
-import { useFormInputContext } from '@/app/hooks/useFormInputContext';
 import Button from '../Button';
-import useRegisterModal from '@/app/hooks/useRegisterModal';
 
 type FooterProps = {
 	actionLabel: string;
+	disabled: boolean;
 	question: string;
 	onClick: () => void;
 };
@@ -30,10 +29,10 @@ const buttons: OAuthButton[] = [
 
 export default function Footer({
 	actionLabel,
+	disabled,
 	question,
 	onClick,
 }: FooterProps) {
-	const { disabled } = useFormInputContext();
 
 	return (
 		<div className='flex flex-col gap-4 mt-3'>

@@ -5,30 +5,11 @@ import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 
-import { FormInputContext } from '@/app/hooks/useFormInputContext';
 import AuthForm from './AuthForm';
 import Footer from './Footer';
 import Modal from './Modal';
 import useLoginModal from '@/app/hooks/useLoginModal';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
-
-const body = (
-	<AuthForm
-		heading={{
-			title: 'Welcome to Airbnb',
-			subtitle: 'Create an account',
-		}}
-		inputs={[
-			{ id: 'email', type: 'email', label: 'Email' },
-			{ id: 'name', label: 'Name' },
-			{
-				id: 'password',
-				type: 'password',
-				label: 'Password',
-			},
-		]}
-	/>
-);
 
 export default function RegisterModal() {
 	const registerModal = useRegisterModal();
@@ -56,8 +37,30 @@ export default function RegisterModal() {
 		loginModal.onOpen();
 	};
 
+	const body = (
+		<AuthForm
+			disabled={isLoading}
+			heading={{
+				title: 'Welcome to Airbnb',
+				subtitle: 'Create an account',
+			}}
+			inputs={[
+				{ id: 'email', type: 'email', label: 'Email' },
+				{ id: 'name', label: 'Name' },
+				{
+					id: 'password',
+					type: 'password',
+					label: 'Password',
+				},
+			]}
+			register={form.register}
+			errors={form.formState.errors}
+		/>
+	);
+
 	const footer = (
 		<Footer
+			disabled={isLoading}
 			question='Already have an account?'
 			actionLabel='Log in'
 			onClick={moveToLogin}
@@ -65,22 +68,15 @@ export default function RegisterModal() {
 	);
 
 	return (
-		<FormInputContext.Provider
-			value={{
-				register: form.register,
-				errors: form.formState.errors,
-				disabled: isLoading,
-			}}
-		>
-			<Modal
-				isOpen={registerModal.isOpen}
-				title='Register'
-				actionLabel='Continue'
-				onClose={registerModal.onClose}
-				onSubmit={form.handleSubmit(onSubmit)}
-				body={body}
-				footer={footer}
-			/>
-		</FormInputContext.Provider>
+		<Modal
+			isOpen={registerModal.isOpen}
+			title='Register'
+			actionLabel='Continue'
+			onClose={registerModal.onClose}
+			onSubmit={form.handleSubmit(onSubmit)}
+			body={body}
+			footer={footer}
+			disabled={isLoading}
+		/>
 	);
 }

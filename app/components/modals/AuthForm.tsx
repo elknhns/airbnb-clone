@@ -1,22 +1,25 @@
-import { useFormInputContext } from '@/app/hooks/useFormInputContext';
+'use client';
+
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import Heading from '../Heading';
 import Input, { InputProps } from '../inputs/Input';
 
 type BodyProps = {
 	heading: { title: string; subtitle: string };
 	inputs: Pick<InputProps, 'id' | 'type' | 'label'>[];
+	disabled: boolean;
+	register: UseFormRegister<FieldValues>;
+	errors: FieldErrors<FieldValues>;
 };
 
-export default function AuthForm({ heading, inputs }: BodyProps) {
-	const { disabled } = useFormInputContext();
+const AuthForm = ({ heading, inputs, ...rest }: BodyProps) => (
+	<div className='flex flex-col gap-4'>
+		<Heading {...heading} center />
 
-	return (
-		<div className='flex flex-col gap-4'>
-			<Heading {...heading} center />
+		{inputs.map((input) => (
+			<Input key={input.id} {...input} {...rest} required />
+		))}
+	</div>
+);
 
-			{inputs.map((input) => (
-				<Input key={input.id} {...input} disabled={disabled} required />
-			))}
-		</div>
-	);
-}
+export default AuthForm;

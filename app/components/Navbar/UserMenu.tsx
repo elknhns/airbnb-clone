@@ -1,6 +1,7 @@
 'use client';
 
 import { AiOutlineMenu } from 'react-icons/ai';
+import { signOut } from 'next-auth/react';
 import { User } from '@prisma/client';
 import { useState } from 'react';
 
@@ -8,14 +9,21 @@ import Avatar from '../Avatar';
 import MenuItem from './MenuItem';
 import useLoginModal from '@/app/hooks/useLoginModal';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
-import { signOut } from 'next-auth/react';
+import useRentModal from '@/app/hooks/useRentModal';
 
 type UserMenuProps = { currentUser?: User | null };
 
 export default function UserMenu({ currentUser }: UserMenuProps) {
 	const registerModal = useRegisterModal();
 	const loginModal = useLoginModal();
+	const rentModal = useRentModal();
 	const [isOpen, setIsOpen] = useState(false);
+
+	const onRent = () => {
+		if (!currentUser) return loginModal.onOpen();
+
+		rentModal.onOpen();
+	};
 
 	const guestMenus = (
 		<>
@@ -38,9 +46,12 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 	return (
 		<div className='relative'>
 			<div className='flex flex-row items-center gap-3'>
-				<div className='hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer'>
+				<button
+					onClick={onRent}
+					className='hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition'
+				>
 					Airbnb your home
-				</div>
+				</button>
 
 				<div
 					onClick={() => setIsOpen((value) => !value)}

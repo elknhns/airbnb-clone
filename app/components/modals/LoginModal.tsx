@@ -6,29 +6,11 @@ import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { FormInputContext } from '@/app/hooks/useFormInputContext';
 import AuthForm from './AuthForm';
 import Footer from './Footer';
 import Modal from './Modal';
 import useLoginModal from '@/app/hooks/useLoginModal';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
-
-const body = (
-	<AuthForm
-		heading={{
-			title: 'Welcome back',
-			subtitle: 'Login to your account!',
-		}}
-		inputs={[
-			{ id: 'email', type: 'email', label: 'Email' },
-			{
-				id: 'password',
-				type: 'password',
-				label: 'Password',
-			},
-		]}
-	/>
-);
 
 export default function LoginModal() {
 	const router = useRouter();
@@ -63,8 +45,29 @@ export default function LoginModal() {
 		registerModal.onOpen();
 	};
 
+	const body = (
+		<AuthForm
+			disabled={isLoading}
+			heading={{
+				title: 'Welcome back',
+				subtitle: 'Login to your account!',
+			}}
+			inputs={[
+				{ id: 'email', type: 'email', label: 'Email' },
+				{
+					id: 'password',
+					type: 'password',
+					label: 'Password',
+				},
+			]}
+			register={form.register}
+			errors={form.formState.errors}
+		/>
+	);
+
 	const footer = (
 		<Footer
+			disabled={isLoading}
 			question='First time using Airbnb?'
 			actionLabel='Create an account'
 			onClick={moveToRegister}
@@ -72,22 +75,15 @@ export default function LoginModal() {
 	);
 
 	return (
-		<FormInputContext.Provider
-			value={{
-				register: form.register,
-				errors: form.formState.errors,
-				disabled: isLoading,
-			}}
-		>
-			<Modal
-				isOpen={loginModal.isOpen}
-				title='Login'
-				actionLabel='Continue'
-				onClose={loginModal.onClose}
-				onSubmit={form.handleSubmit(onSubmit)}
-				body={body}
-				footer={footer}
-			/>
-		</FormInputContext.Provider>
+		<Modal
+			isOpen={loginModal.isOpen}
+			title='Login'
+			actionLabel='Continue'
+			onClose={loginModal.onClose}
+			onSubmit={form.handleSubmit(onSubmit)}
+			body={body}
+			footer={footer}
+			disabled={isLoading}
+		/>
 	);
 }
