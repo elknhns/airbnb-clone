@@ -1,15 +1,12 @@
 'use client';
 
-import { IconType } from 'react-icons';
 import { useRouter, useSearchParams } from 'next/navigation';
 import classNames from 'classnames';
 import qs from 'query-string';
 
-type CategoryBoxProps = {
-	label: string;
-	icon: IconType;
-	selected: boolean;
-};
+import { Category } from './navbar/Categories';
+
+type CategoryBoxProps = Category & { selected: boolean };
 
 export default function CategoryBox({
 	icon: Icon,
