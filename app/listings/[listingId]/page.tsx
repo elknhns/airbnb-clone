@@ -2,19 +2,21 @@ import EmptyState from '@/app/components/EmptyState';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import getListingById from '@/app/actions/getListingById';
 import ListingClient from './ListingClient';
+import getReservations from '@/app/actions/getReservations';
 
 type ListingPageParams = { listingId?: string };
 
-type Params = {
-	params: ListingPageParams;
-};
+type Params = { params: ListingPageParams };
 
 export default async function ListingPage({ params }: Params) {
 	const listing = await getListingById(params);
-	const currentUser = await getCurrentUser();
 
 	return listing ? (
-		<ListingClient listing={listing} currentUser={currentUser} />
+		<ListingClient
+			listing={listing}
+			currentUser={await getCurrentUser()}
+			reservations={await getReservations(params)}
+		/>
 	) : (
 		<EmptyState />
 	);
