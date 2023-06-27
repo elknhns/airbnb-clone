@@ -37,7 +37,11 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 	const loggedInMenus = (
 		<>
 			<MenuItem label='My trips' onClick={() => router.push('/trips')} />
-			<MenuItem label='My favorites' onClick={() => {}} />
+
+			<MenuItem
+				label='My favorites'
+				onClick={() => router.push('/favorites')}
+			/>
 
 			<MenuItem
 				label='My reservations'
