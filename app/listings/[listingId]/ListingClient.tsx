@@ -52,7 +52,7 @@ export default function ListingClient(props: ListingClientProps) {
 
 			toast.success('Listing reserved!');
 			setDateRange(initialDateRange);
-			// router.push('/trips')
+			router.push('/trips')
 			router.refresh();
 		} catch {
 			toast.error('Something went wrong');
@@ -79,8 +79,6 @@ export default function ListingClient(props: ListingClientProps) {
 			}, []),
 		[reservations]
 	);
-
-	console.log('disabledDates', disabledDates);
 
 	useEffect(() => {
 		if (!dateRange.startDate || !dateRange.endDate) return;

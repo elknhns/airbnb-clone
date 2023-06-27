@@ -1,4 +1,5 @@
 'use client';
+
 import { MapContainer, Marker, TileLayer } from 'react-leaflet';
 import L from 'leaflet';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
