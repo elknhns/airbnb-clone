@@ -1,8 +1,11 @@
 import prisma from '@/app/libs/prismadb';
 
-const getListing = () =>
-	prisma.listing.findMany({
-		orderBy: { createdAt: 'desc' },
-	});
+export type GetListingsParams = { userId?: string };
 
-export default getListing;
+const getListings = ( params: GetListingsParams ) =>
+	prisma.listing.findMany( {
+		orderBy: { createdAt: 'desc' },
+		where: params,
+	} );
+
+export default getListings;
