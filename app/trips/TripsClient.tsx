@@ -24,7 +24,7 @@ export default function TripsClient(props: TripsClientProps) {
 		setIdOnDelete(id);
 
 		try {
-			axios.delete(`/api/reservations/${id}`);
+			await axios.delete(`/api/reservations/${id}`);
 			toast.success('Reservation cancelled');
 			router.refresh();
 		} catch (error) {
