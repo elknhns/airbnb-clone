@@ -234,8 +234,6 @@ export default function RentModal() {
 		[STEPS.PRICE]: priceBody,
 	};
 
-	console.log(form.watch('title'))
-
 	return (
 		<Modal
 			title='Airbnb your home!'

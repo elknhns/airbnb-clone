@@ -13,7 +13,7 @@ export type CountrySelectValue = {
 };
 
 export type CountrySelectProps = {
-	value: CountrySelectValue;
+	value?: CountrySelectValue;
 	onChange: (value: SingleValue<CountrySelectValue>) => void;
 };
 
