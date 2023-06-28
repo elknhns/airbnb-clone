@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
 
-import { categories } from '../navbar/Categories';
+import { categories } from '../navbar/categories';
 import Counter from '../inputs/Counter';
 import CategoryInput from '../inputs/CategoryInput';
 import CountrySelect from '../inputs/CountrySelect';
