@@ -3,6 +3,7 @@
 import { formatISO } from 'date-fns';
 import { Range } from 'react-date-range';
 import { ReactElement, useMemo, useState } from 'react';
+import { SingleValue } from 'react-select';
 import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import qs from 'query-string';
@@ -29,7 +30,7 @@ export default function SearchModal() {
 	const [guestCount, setGuestCount] = useState(1);
 	const [roomCount, setRoomCount] = useState(1);
 	const [bathroomCount, setBathroomCount] = useState(1);
-	const [location, setLocation] = useState<CountrySelectValue>();
+	const [location, setLocation] = useState<SingleValue<CountrySelectValue>>();
 	const [dateRange, setDateRange] = useState<Range>({
 		startDate: new Date(),
 		endDate: new Date(),
@@ -77,7 +78,7 @@ export default function SearchModal() {
 
 			<CountrySelect
 				value={location}
-				onChange={(value) => value && setLocation(value)}
+				onChange={setLocation}
 			/>
 
 			<hr />
