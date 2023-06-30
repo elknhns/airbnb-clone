@@ -10,10 +10,10 @@ import {
   GiIsland,
   GiWindmill,
 } from 'react-icons/gi';
-import { IconType } from 'react-icons';
 import { IoDiamond } from 'react-icons/io5';
 import { MdOutlineVilla } from 'react-icons/md';
 import { TbBeach, TbMountain, TbPool } from 'react-icons/tb';
+import type { IconType } from 'react-icons';
 
 export type Category = { label: string; icon: IconType; description: string };
 

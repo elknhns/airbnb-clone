@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { ModalStore } from './Modal.types';
+import type { ModalStore } from './Modal.types';
 
 export default create<ModalStore>((set) => ({
 	isOpen: false,

@@ -1,8 +1,8 @@
-import { MouseEventHandler, useMemo } from 'react';
-import { User } from '@prisma/client';
-import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
+import { type MouseEventHandler, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import type { User } from '@prisma/client';
 
 import useLoginModal from './useLoginModal';
 

@@ -1,11 +1,11 @@
 'use client';
 
-import { User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import Image from 'next/image';
 
 import Heading from '../Heading';
-import useCountries from '@/app/hooks/useCountries';
 import HeartButton from '../HeartButton';
+import useCountries from '@/app/hooks/useCountries';
 
 type ListingHeadProps = {
 	title: string;

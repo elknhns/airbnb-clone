@@ -2,15 +2,15 @@
 
 import { AiOutlineMenu } from 'react-icons/ai';
 import { signOut } from 'next-auth/react';
-import { User } from '@prisma/client';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import type { User } from '@prisma/client';
 
 import Avatar from '../Avatar';
 import MenuItem from './MenuItem';
 import useLoginModal from '@/app/hooks/useLoginModal';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import useRentModal from '@/app/hooks/useRentModal';
-import { useRouter } from 'next/navigation';
 
 type UserMenuProps = { currentUser?: User | null };
 

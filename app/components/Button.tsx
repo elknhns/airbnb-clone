@@ -1,7 +1,7 @@
-import { IconType } from 'react-icons';
-import { MouseEventHandler } from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
+import type { IconType } from 'react-icons';
+import type { MouseEventHandler } from 'react';
 
 type ButtonProps = {
 	label: string;

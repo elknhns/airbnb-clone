@@ -1,12 +1,12 @@
 'use client';
 
 import { differenceInCalendarDays, eachDayOfInterval } from 'date-fns';
-import { Listing, Reservation, User } from '@prisma/client';
-import { Range } from 'react-date-range';
 import { toast } from 'react-hot-toast';
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import type { Listing, Reservation, User } from '@prisma/client';
+import type { Range } from 'react-date-range';
 
 import { categories } from '@/app/categories';
 import Container from '@/app/components/Container';

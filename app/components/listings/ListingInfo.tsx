@@ -1,7 +1,7 @@
 'use client';
 
-import { User } from '@prisma/client';
 import dynamic from 'next/dynamic';
+import type { User } from '@prisma/client';
 
 import { type Category } from '@/app/categories';
 import Avatar from '../Avatar';

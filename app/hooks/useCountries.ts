@@ -1,6 +1,6 @@
 import countries from 'world-countries';
 
-import { CountrySelectValue } from '../components/inputs/CountrySelect';
+import type { CountrySelectValue } from '../components/inputs/CountrySelect';
 
 const formattedCountries: CountrySelectValue[] = countries.map((country) => ({
 	value: country.cca2,

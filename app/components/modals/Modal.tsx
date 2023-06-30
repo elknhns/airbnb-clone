@@ -1,7 +1,7 @@
 'use client';
 
 import { IoMdClose } from 'react-icons/io';
-import { ReactElement, useEffect, useState } from 'react';
+import { type ReactElement, useEffect, useState } from 'react';
 
 import Button from '../Button';
 import clsx from 'clsx';

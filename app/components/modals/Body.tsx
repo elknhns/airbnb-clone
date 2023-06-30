@@ -1,4 +1,4 @@
-import Heading, { HeadingProps } from '../Heading';
+import Heading, { type HeadingProps } from '../Heading';
 
 export type BodyProps = { children: React.ReactNode; heading: HeadingProps };
 

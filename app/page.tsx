@@ -1,7 +1,7 @@
 import Container from './components/Container';
 import EmptyState from './components/EmptyState';
 import getCurrentUser from './actions/getCurrentUser';
-import getListings, { GetListingsParams } from './actions/getListings';
+import getListings, { type GetListingsParams } from './actions/getListings';
 import ListingCard from './components/listings/ListingCard';
 
 type HomeProps = { searchParams: GetListingsParams };

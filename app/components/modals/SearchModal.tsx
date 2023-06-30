@@ -1,11 +1,11 @@
 'use client';
 
 import { formatISO } from 'date-fns';
-import { Listing } from '@prisma/client';
 import { useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import qs from 'query-string';
+import type { Listing } from '@prisma/client';
 import type { Range } from 'react-date-range';
 import type { SingleValue } from 'react-select';
 

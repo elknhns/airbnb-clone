@@ -1,8 +1,8 @@
 'use client';
 
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { type FieldValues, type SubmitHandler, useForm } from 'react-hook-form';
+import { useState } from 'react';
 import axios from 'axios';
 
 import AuthForm from './AuthForm';

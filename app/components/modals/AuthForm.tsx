@@ -1,8 +1,12 @@
 'use client';
 
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import type {
+	FieldErrors,
+	FieldValues,
+	UseFormRegister,
+} from 'react-hook-form';
 import Heading from '../Heading';
-import Input, { InputProps } from '../inputs/Input';
+import Input, { type InputProps } from '../inputs/Input';
 
 type BodyProps = {
 	heading: { title: string; subtitle: string };

@@ -1,10 +1,10 @@
 'use client';
 
 import { format } from 'date-fns';
-import { Listing, Reservation, User } from '@prisma/client';
-import { MouseEventHandler } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import type { Listing, Reservation, User } from '@prisma/client';
+import type { MouseEventHandler } from 'react';
 
 import Button from '../Button';
 import HeartButton from '../HeartButton';

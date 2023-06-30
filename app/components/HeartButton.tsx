@@ -2,7 +2,7 @@
 
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
-import useFavorite, { UseFavoriteParams } from '../hooks/useFavorite';
+import useFavorite, { type UseFavoriteParams } from '../hooks/useFavorite';
 
 export default function HeartButton(props: UseFavoriteParams) {
 	const { isLiked, toggleFavorite } = useFavorite(props);

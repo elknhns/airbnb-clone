@@ -1,4 +1,4 @@
-import { Range } from 'react-date-range';
+import type { Range } from 'react-date-range';
 
 import Calendar from '../inputs/Calendar';
 import Button from '../Button';

@@ -1,19 +1,19 @@
 'use client';
 
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { Fragment, useMemo, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { type FieldValues, type SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
 
 import { categories } from '@/app/categories';
-import Body, { BodyProps } from './Body';
-import Counter from '../inputs/Counter';
+import Body, { type BodyProps } from './Body';
 import CategoryInput from '../inputs/CategoryInput';
+import Counter from '../inputs/Counter';
 import CountrySelect from '../inputs/CountrySelect';
 import ImageUpload from '../inputs/ImageUpload';
-import Input, { InputProps } from '../inputs/Input';
+import Input, { type InputProps } from '../inputs/Input';
 import Modal from './Modal';
 import useRentModal from '@/app/hooks/useRentModal';
 

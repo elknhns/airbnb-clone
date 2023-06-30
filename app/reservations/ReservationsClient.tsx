@@ -1,13 +1,13 @@
 'use client';
 
-import { Listing, Reservation, User } from '@prisma/client';
+import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import axios from 'axios';
+import type { Listing, Reservation, User } from '@prisma/client';
 
 import Container from '../components/Container';
 import Heading from '../components/Heading';
-import { toast } from 'react-hot-toast';
 import ListingCard from '../components/listings/ListingCard';
 
 type ReservationsClientProps = {
