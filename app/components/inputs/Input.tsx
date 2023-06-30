@@ -2,7 +2,7 @@
 
 import { BiDollar } from 'react-icons/bi';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 export type InputProps = {
 	id: string;
@@ -39,29 +39,23 @@ const Input = ({
 			type={type}
 			{...register(id, { required })}
 			placeholder=' '
-			className={classNames(
+			className={clsx(
 				'peer w-full p-4 pt-6 font-light bg-white border-2 rounded-md outline-none',
 				'transition disabled:opacity-70 disabled:cursor-not-allowed',
-				{
-					'pl-9': formatPrice,
-					'pl-4': !formatPrice,
-					'border-rose-500 focus:border-rose-500': errors[id],
-					'border-neutral-300 focus:border-black': !errors[id],
-				}
+				formatPrice ? 'pl-9' : 'pl-4',
+				errors[id]
+					? 'border-rose-500 focus:border-rose-500'
+					: 'border-neutral-300 focus:border-black'
 			)}
 		/>
 
 		<label
 			htmlFor={id}
-			className={classNames(
+			className={clsx(
 				'absolute text-md duration-150 transform -translate-y-4 top-5 z-10 origin-[0] scale-75',
 				'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4',
-				{
-					'left-9': formatPrice,
-					'left-4': !formatPrice,
-					'text-rose-500': errors[id],
-					'text-zinc-400': !errors[id],
-				}
+				formatPrice ? 'left-9' : 'left-4',
+				errors[id] ? 'text-rose-500' : 'text-zinc-400'
 			)}
 		>
 			{label}

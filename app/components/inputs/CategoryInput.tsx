@@ -1,7 +1,7 @@
 'use client';
 
 import { IconType } from 'react-icons';
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 type CategoryInputProps = {
 	icon: IconType;
@@ -16,12 +16,9 @@ export default function CategoryInput(props: CategoryInputProps) {
 	return (
 		<div
 			onClick={() => onClick(label)}
-			className={classNames(
+			className={clsx(
 				'rounded-xl border-2 p-4 flex flex-col gap-3 hover:border-black transition cursor-pointer',
-				{
-					'border-black': selected,
-					'border-neutral-200': !selected,
-				}
+				selected ? 'border-black' : 'border-neutral-200'
 			)}
 		>
 			<Icon size={30} />

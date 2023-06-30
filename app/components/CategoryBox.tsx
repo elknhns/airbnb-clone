@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import qs from 'query-string';
 
 import type { Category } from '../categories';
@@ -34,10 +34,11 @@ export default function CategoryBox({
 	return (
 		<div
 			onClick={handleClick}
-			className={classNames(
+			className={clsx(
 				'flex flex-col items-center justify-center gap-2 p-3 border-b-2 hover:text-neutral-800 transition cursor-pointer',
-				{ 'border-b-neutral-800 text-neutral-800': selected },
-				{ 'border-transparent text-neutral-500': !selected }
+				selected
+					? 'border-b-neutral-800 text-neutral-800'
+					: 'border-transparent text-neutral-500'
 			)}
 		>
 			<Icon size={26} />
