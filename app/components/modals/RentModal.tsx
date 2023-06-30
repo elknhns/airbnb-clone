@@ -225,6 +225,11 @@ export default function RentModal() {
 		[STEPS.PRICE]: priceBody,
 	};
 
+	const secondaryButton =
+		step === STEPS.CATEGORY
+			? undefined
+			: { label: 'Back', onClick: onBack };
+
 	return (
 		<Modal
 			title='Airbnb your home!'
@@ -233,8 +238,7 @@ export default function RentModal() {
 			onClose={rentModal.onClose}
 			onSubmit={form.handleSubmit(onSubmit)}
 			actionLabel={step === STEPS.PRICE ? 'Create' : 'Next'}
-			secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
-			secondaryActionLabel={step === STEPS.CATEGORY ? undefined : 'Back'}
+			secondaryButton={secondaryButton}
 			disabled={isLoading}
 		/>
 	);

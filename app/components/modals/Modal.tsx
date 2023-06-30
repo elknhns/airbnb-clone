@@ -14,8 +14,7 @@ type ModalProps = {
 	title?: string;
 	body?: ReactElement;
 	footer?: ReactElement;
-	secondaryAction?: () => void;
-	secondaryActionLabel?: string;
+	secondaryButton?: { onClick: () => void; label: string };
 	disabled?: boolean;
 };
 
@@ -27,8 +26,7 @@ export default function Modal({
 	isOpen,
 	onClose,
 	onSubmit,
-	secondaryAction,
-	secondaryActionLabel,
+	secondaryButton,
 	title,
 }: ModalProps) {
 	const [showModal, setShowModal] = useState(isOpen);
@@ -40,7 +38,7 @@ export default function Modal({
 		setTimeout(onClose, 300);
 	};
 
-	const handleSecondaryAction = () => disabled || secondaryAction?.();
+	const handleSecondaryAction = () => disabled || secondaryButton?.onClick();
 
 	useEffect(() => {
 		setShowModal(isOpen);
@@ -76,15 +74,14 @@ export default function Modal({
 
 							<div className='flex flex-col gap-2 p-6'>
 								<div className='flex flex-row items-center gap-4 w-full'>
-									{secondaryAction &&
-										secondaryActionLabel && (
-											<Button
-												outline
-												label={secondaryActionLabel}
-												disabled={disabled}
-												onClick={handleSecondaryAction}
-											/>
-										)}
+									{secondaryButton && (
+										<Button
+											outline
+											label={secondaryButton.label}
+											disabled={disabled}
+											onClick={handleSecondaryAction}
+										/>
+									)}
 
 									<Button
 										label={actionLabel}

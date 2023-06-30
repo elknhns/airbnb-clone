@@ -10,11 +10,10 @@ import qs from 'query-string';
 
 import Body, { BodyProps } from './Body';
 import Calendar from '../inputs/Calendar';
+import Counter, { CounterProps } from '../inputs/Counter';
 import CountrySelect, { CountrySelectValue } from '../inputs/CountrySelect';
-import Heading from '../Heading';
 import Modal from './Modal';
 import useSearchModal from '@/app/hooks/useSearchModal';
-import Counter, { CounterProps } from '../inputs/Counter';
 
 enum STEPS {
 	LOCATION,
@@ -134,12 +133,16 @@ export default function SearchModal() {
 		[STEPS.INFO]: infoBody,
 	};
 
+	const secondaryButton =
+		step === STEPS.LOCATION
+			? undefined
+			: { label: 'Back', onClick: onBack };
+
 	return (
 		<Modal
 			title='Filters'
 			actionLabel={step === STEPS.INFO ? 'Search' : 'Next'}
-			secondaryActionLabel={step === STEPS.LOCATION ? undefined : 'Back'}
-			secondaryAction={onBack}
+			secondaryButton={secondaryButton}
 			body={<Body {...stepBody[step]} />}
 			isOpen={searchModal.isOpen}
 			onClose={searchModal.onClose}
