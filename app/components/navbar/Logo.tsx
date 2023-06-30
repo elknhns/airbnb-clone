@@ -1,21 +1,18 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 
-const Logo = () => {
-	const router = useRouter();
-
-	return (
+const Logo = () => (
+	<Link href='/'>
 		<Image
-			onClick={() => router.push('/')}
 			src='/images/logo.png'
 			alt='Airbnb logo'
 			className='hidden md:block cursor-pointer'
 			height={100}
 			width={100}
 		/>
-	);
-};
+	</Link>
+);
 
 export default Logo;

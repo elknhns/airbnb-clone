@@ -1,6 +1,7 @@
 import { IconType } from 'react-icons';
 import { MouseEventHandler } from 'react';
 import classNames from 'classnames';
+import Link from 'next/link';
 
 type ButtonProps = {
 	label: string;
@@ -9,12 +10,13 @@ type ButtonProps = {
 	outline?: boolean;
 	small?: boolean;
 	icon?: IconType;
+	href?: string;
 };
 
 export default function Button(props: ButtonProps) {
-	const { icon: Icon, label, outline, small, ...rest } = props;
+	const { icon: Icon, label, outline, small, href, ...rest } = props;
 
-	return (
+	const button = (
 		<button
 			className={classNames(
 				'relative disabled:opacity-70 disabled:cursor-not-allowed rounded-lg hover:opacity-80 transition w-full',
@@ -31,4 +33,6 @@ export default function Button(props: ButtonProps) {
 			{label}
 		</button>
 	);
+
+	return href ? <Link href={href}>{button}</Link> : button;
 }

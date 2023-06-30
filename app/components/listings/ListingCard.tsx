@@ -3,8 +3,8 @@
 import { format } from 'date-fns';
 import { Listing, Reservation, User } from '@prisma/client';
 import { MouseEventHandler } from 'react';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import Button from '../Button';
 import HeartButton from '../HeartButton';
@@ -28,7 +28,6 @@ const getReservationDate = (reservation?: Reservation) => {
 };
 
 export default function ListingCard(props: ListingCardProps) {
-	const router = useRouter();
 	const { getByValue } = useCountries();
 
 	const handleCancel: MouseEventHandler = (e) => {
@@ -43,8 +42,8 @@ export default function ListingCard(props: ListingCardProps) {
 	const reservationDate = getReservationDate(props.reservation);
 
 	return (
-		<div
-			onClick={() => router.push(`/listings/${props.data.id}`)}
+		<Link
+			href={`/listings/${props.data.id}`}
 			className='col-span-1 cursor-pointer group'
 		>
 			<div className='flex flex-col gap-2 w-full'>
@@ -89,6 +88,6 @@ export default function ListingCard(props: ListingCardProps) {
 					/>
 				)}
 			</div>
-		</div>
+		</Link>
 	);
 }
