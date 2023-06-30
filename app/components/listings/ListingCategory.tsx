@@ -1,4 +1,4 @@
-import { Category } from '../navbar/Categories';
+import type { Category } from "@/app/categories";
 
 const ListingCategory = ({ icon: Icon, label, description }: Category) => (
 	<div className='flex items-center gap-4'>

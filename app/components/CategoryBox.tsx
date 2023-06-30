@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import classNames from 'classnames';
 import qs from 'query-string';
 
-import { Category } from './navbar/Categories';
+import type { Category } from '../categories';
 
 type CategoryBoxProps = Category & { selected: boolean };
 

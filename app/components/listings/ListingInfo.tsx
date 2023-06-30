@@ -1,12 +1,12 @@
 'use client';
 
 import { User } from '@prisma/client';
+import dynamic from 'next/dynamic';
 
-import { Category } from '../navbar/Categories';
-import useCountries from '@/app/hooks/useCountries';
+import { type Category } from '@/app/categories';
 import Avatar from '../Avatar';
 import ListingCategory from './ListingCategory';
-import dynamic from 'next/dynamic';
+import useCountries from '@/app/hooks/useCountries';
 
 const Map = dynamic(() => import('../Map'), { ssr: false });
 

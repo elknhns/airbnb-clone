@@ -1,4 +1,5 @@
 'use client';
+
 import { User } from '@prisma/client';
 
 import Categories from './Categories';
