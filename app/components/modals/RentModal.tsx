@@ -1,19 +1,19 @@
 'use client';
 
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { Fragment, ReactElement, useMemo, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
 
 import { categories } from '@/app/categories';
+import Body, { BodyProps } from './Body';
 import Counter from '../inputs/Counter';
 import CategoryInput from '../inputs/CategoryInput';
 import CountrySelect from '../inputs/CountrySelect';
-import Heading from '../Heading';
 import ImageUpload from '../inputs/ImageUpload';
-import Input from '../inputs/Input';
+import Input, { InputProps } from '../inputs/Input';
 import Modal from './Modal';
 import useRentModal from '@/app/hooks/useRentModal';
 
@@ -25,6 +25,11 @@ enum STEPS {
 	DESCRIPTION,
 	PRICE,
 }
+
+type IntrinsicInputProps = Pick<
+	InputProps,
+	'id' | 'label' | 'formatPrice' | 'type'
+>;
 
 export default function RentModal() {
 	const rentModal = useRentModal();
@@ -55,6 +60,16 @@ export default function RentModal() {
 			shouldDirty: true,
 			shouldTouch: true,
 		});
+
+	const getInputElement = (props: IntrinsicInputProps) => (
+		<Input
+			{...props}
+			disabled={isLoading}
+			register={form.register}
+			errors={form.formState.errors}
+			required
+		/>
+	);
 
 	const handleClick = (category: string) =>
 		setCustomValue('category', category);
@@ -101,13 +116,12 @@ export default function RentModal() {
 		},
 	];
 
-	const categoryBody = (
-		<div className='flex flex-col gap-8'>
-			<Heading
-				title='Which of these best describes your place?'
-				subtitle='Pick a category'
-			/>
-
+	const categoryBody = {
+		heading: {
+			title: 'Which of these best describes your place?',
+			subtitle: 'Pick a category',
+		},
+		children: (
 			<div className='grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto'>
 				{categories.map((category) => (
 					<div key={category.label} className='col-span-1'>
@@ -120,16 +134,15 @@ export default function RentModal() {
 					</div>
 				))}
 			</div>
-		</div>
-	);
+		),
+	};
 
-	const locationBody = (
-		<div className='flex flex-col gap-8'>
-			<Heading
-				title='Where is your place located?'
-				subtitle='Help guests find you!'
-			/>
-
+	const locationBody = {
+		heading: {
+			title: 'Where is your place located?',
+			subtitle: 'Help guests find you!',
+		},
+		children: (
 			<div className='flex flex-col gap-8'>
 				<CountrySelect
 					value={selectedLocation}
@@ -138,94 +151,72 @@ export default function RentModal() {
 
 				<Map center={selectedLocation?.latlng} />
 			</div>
-		</div>
-	);
+		),
+	};
 
-	const infoBody = (
-		<div className='flex flex-col gap-8'>
-			<Heading
-				title='Share some basics about your place'
-				subtitle='What amenities do you have?'
-			/>
+	const infoBody = {
+		heading: {
+			title: 'Share some basics about your place',
+			subtitle: 'What amenities do you have?',
+		},
+		children: counters.map(({ fieldName, ...rest }, index) => (
+			<Fragment key={fieldName}>
+				{index !== 0 && <hr />}
 
-			{counters.map(({ fieldName, ...rest }, index) => (
-				<Fragment key={fieldName}>
-					{index !== 0 && <hr />}
+				<Counter
+					value={form.watch(fieldName)}
+					onChange={(value) => setCustomValue(fieldName, value)}
+					{...rest}
+				/>
+			</Fragment>
+		)),
+	};
 
-					<Counter
-						value={form.watch(fieldName)}
-						onChange={(value) => setCustomValue(fieldName, value)}
-						{...rest}
-					/>
-				</Fragment>
-			))}
-		</div>
-	);
-
-	const imagesBody = (
-		<div className='flex flex-col gap-8'>
-			<Heading
-				title='Add a photo of your place'
-				subtitle='Show guests what your place looks like!'
-			/>
-
+	const imagesBody = {
+		heading: {
+			title: 'Add a photo of your place',
+			subtitle: 'Show guests what your place looks like!',
+		},
+		children: (
 			<ImageUpload
 				value={form.watch('imageSrc')}
 				onChange={(value) => setCustomValue('imageSrc', value)}
 			/>
-		</div>
-	);
+		),
+	};
 
-	const descriptionBody = (
-		<div className='flex flex-col gap-8'>
-			<Heading
-				title='How would you describe your place'
-				subtitle='Short and sweet works best!'
-			/>
+	const descriptionInputs: IntrinsicInputProps[] = [
+		{ id: 'title', label: 'Title' },
+		{ id: 'description', label: 'Description' },
+	];
 
-			<Input
-				id='title'
-				label='Title'
-				disabled={isLoading}
-				register={form.register}
-				errors={form.formState.errors}
-				required
-			/>
+	const descriptionBody = {
+		heading: {
+			title: 'How would you describe your place',
+			subtitle: 'Short and sweet works best!',
+		},
+		children: descriptionInputs.map((input, index) => (
+			<Fragment key={input.id}>
+				{index > 0 && <hr />}
+				{getInputElement(input)}
+			</Fragment>
+		)),
+	};
 
-			<hr />
+	const priceBody = {
+		heading: {
+			title: 'Now, set your price',
+			subtitle: 'How much do you charge per night?',
+		},
+		children: getInputElement({
+			id: 'price',
+			label: 'Price',
+			formatPrice: true,
+			type: 'number',
+		}),
+	};
 
-			<Input
-				id='description'
-				label='Description'
-				disabled={isLoading}
-				register={form.register}
-				errors={form.formState.errors}
-				required
-			/>
-		</div>
-	);
-
-	const priceBody = (
-		<div className='flex flex-col gap-8'>
-			<Heading
-				title='Now, set your price'
-				subtitle='How much do you charge per night?'
-			/>
-
-			<Input
-				id='price'
-				label='Price'
-				formatPrice
-				type='number'
-				disabled={isLoading}
-				register={form.register}
-				errors={form.formState.errors}
-				required
-			/>
-		</div>
-	);
-
-	const stepBody: Record<STEPS, ReactElement> = {
+	const stepBody: Record<STEPS, BodyProps> = {
 		[STEPS.CATEGORY]: categoryBody,
 		[STEPS.LOCATION]: locationBody,
 		[STEPS.INFO]: infoBody,
@@ -237,7 +228,7 @@ export default function RentModal() {
 	return (
 		<Modal
 			title='Airbnb your home!'
-			body={stepBody[step]}
+			body={<Body {...stepBody[step]} />}
 			isOpen={rentModal.isOpen}
 			onClose={rentModal.onClose}
 			onSubmit={form.handleSubmit(onSubmit)}

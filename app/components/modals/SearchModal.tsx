@@ -8,12 +8,13 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import qs from 'query-string';
 
+import Body, { BodyProps } from './Body';
 import Calendar from '../inputs/Calendar';
 import CountrySelect, { CountrySelectValue } from '../inputs/CountrySelect';
 import Heading from '../Heading';
 import Modal from './Modal';
 import useSearchModal from '@/app/hooks/useSearchModal';
-import Counter from '../inputs/Counter';
+import Counter, { CounterProps } from '../inputs/Counter';
 
 enum STEPS {
 	LOCATION,
@@ -69,69 +70,65 @@ export default function SearchModal() {
 		[location]
 	);
 
-	const locationBody = (
-		<div className='flex flex-col gap-8'>
-			<Heading
-				title='Where do you wanna go?'
-				subtitle='Find the perfect location!'
-			/>
+	const locationBody = {
+		heading: {
+			title: 'Where do you wanna go?',
+			subtitle: 'Find the perfect location!',
+		},
+		children: (
+			<>
+				<CountrySelect value={location} onChange={setLocation} />
+				<hr />
+				<Map center={location?.latlng} />
+			</>
+		),
+	};
 
-			<CountrySelect
-				value={location}
-				onChange={setLocation}
-			/>
-
-			<hr />
-
-			<Map center={location?.latlng} />
-		</div>
-	);
-
-	const dateBody = (
-		<div className='flex flex-col gap-8'>
-			<Heading
-				title='When do you plan to go?'
-				subtitle='Make sure everyone is free!'
-			/>
-
+	const dateBody = {
+		heading: {
+			title: 'When do you plan to go?',
+			subtitle: 'Make sure everyone is free!',
+		},
+		children: (
 			<Calendar
 				value={dateRange}
 				onChange={(value) => setDateRange(value.selection)}
 			/>
-		</div>
-	);
+		),
+	};
 
-	const infoBody = (
-		<div className='flex flex-col gap-8'>
-			<Heading
-				title='More information'
-				subtitle='Find your perfect place!'
-			/>
+	const infoCounters: CounterProps[] = [
+		{
+			title: 'Guests',
+			subtitle: 'How many guests are coming?',
+			value: guestCount,
+			onChange: setGuestCount,
+		},
+		{
+			title: 'Rooms',
+			subtitle: 'How many rooms do you need?',
+			value: roomCount,
+			onChange: setRoomCount,
+		},
+		{
+			title: 'Bathrooms',
+			subtitle: 'How many bathrooms do you need?',
+			value: bathroomCount,
+			onChange: setBathroomCount,
+		},
+	];
 
-			<Counter
-				title='Guests'
-				subtitle='How many guests are coming?'
-				value={guestCount}
-				onChange={setGuestCount}
-			/>
+	const infoBody = {
+		heading: {
+			title: 'More information',
+			subtitle: 'Find your perfect place!',
+		},
+		children: infoCounters.map((counter) => (
+			<Counter key={counter.title} {...counter} />
+		)),
+	};
 
-			<Counter
-				title='Rooms'
-				subtitle='How many rooms do you need?'
-				value={roomCount}
-				onChange={setRoomCount}
-			/>
-
-			<Counter
-				title='Bathrooms'
-				subtitle='How many bathrooms do you need?'
-				value={bathroomCount}
-				onChange={setBathroomCount}
-			/>
-		</div>
-	);
-
-	const stepBody: Record<STEPS, ReactElement> = {
+	const stepBody: Record<STEPS, BodyProps> = {
 		[STEPS.LOCATION]: locationBody,
 		[STEPS.DATE]: dateBody,
 		[STEPS.INFO]: infoBody,
@@ -143,7 +140,7 @@ export default function SearchModal() {
 			actionLabel={step === STEPS.INFO ? 'Search' : 'Next'}
 			secondaryActionLabel={step === STEPS.LOCATION ? undefined : 'Back'}
 			secondaryAction={onBack}
-			body={stepBody[step]}
+			body={<Body {...stepBody[step]} />}
 			isOpen={searchModal.isOpen}
 			onClose={searchModal.onClose}
 			onSubmit={onSubmit}

@@ -2,7 +2,7 @@ import { Nunito } from 'next/font/google';
 
 import getCurrentUser from './actions/getCurrentUser';
 import LoginModal from './components/modals/LoginModal';
-import Navbar from './components/navbar/Navbar';
+import Nav from './components/navbar/Nav';
 import RegisterModal from './components/modals/RegisterModal';
 import RentModal from './components/modals/RentModal';
 import SearchModal from './components/modals/SearchModal';
@@ -26,7 +26,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 				<LoginModal />
 				<RentModal />
 				<SearchModal />
-				<Navbar currentUser={currentUser} />
+				<Nav currentUser={currentUser} />
 				<div className='pb-20 pt-28'>{children}</div>
 			</body>
 		</html>

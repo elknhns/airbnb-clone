@@ -2,7 +2,7 @@
 
 import classNames from 'classnames';
 
-type HeadingProps = { title: string; subtitle?: string; center?: boolean };
+export type HeadingProps = { title: string; subtitle?: string; center?: boolean };
 
 const Heading = ({ title, subtitle, center }: HeadingProps) => (
 	<div className={classNames({ 'text-center': center })}>

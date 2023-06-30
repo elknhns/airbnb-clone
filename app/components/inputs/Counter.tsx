@@ -2,7 +2,7 @@
 
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 
-type CounterProps = {
+export type CounterProps = {
 	title: string;
 	subtitle: string;
 	value: number;
