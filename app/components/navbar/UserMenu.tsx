@@ -36,24 +36,11 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 
 	const loggedInMenus = (
 		<>
-			<MenuItem label='My trips' onClick={() => router.push('/trips')} />
-
-			<MenuItem
-				label='My favorites'
-				onClick={() => router.push('/favorites')}
-			/>
-
-			<MenuItem
-				label='My reservations'
-				onClick={() => router.push('/reservations')}
-			/>
-
-			<MenuItem
-				label='My properties'
-				onClick={() => router.push('/properties')}
-			/>
-
-			<MenuItem label='Airbnb my home' onClick={() => {}} />
+			<MenuItem label='My trips' href='/trips' />
+			<MenuItem label='My favorites' href='/favorites' />
+			<MenuItem label='My reservations' href='/reservations' />
+			<MenuItem label='My properties' href='/properties' />
+			<MenuItem label='Airbnb my home' onClick={rentModal.onOpen} />
 			<MenuItem label='Logout' onClick={signOut} />
 		</>
 	);
