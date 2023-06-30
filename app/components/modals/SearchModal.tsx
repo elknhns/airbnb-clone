@@ -1,17 +1,20 @@
 'use client';
 
 import { formatISO } from 'date-fns';
-import { Range } from 'react-date-range';
-import { ReactElement, useMemo, useState } from 'react';
-import { SingleValue } from 'react-select';
+import { Listing } from '@prisma/client';
+import { useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import qs from 'query-string';
+import type { Range } from 'react-date-range';
+import type { SingleValue } from 'react-select';
 
-import Body, { BodyProps } from './Body';
+import Body, { type BodyProps } from './Body';
 import Calendar from '../inputs/Calendar';
-import Counter, { CounterProps } from '../inputs/Counter';
-import CountrySelect, { CountrySelectValue } from '../inputs/CountrySelect';
+import Counter, { type CounterProps } from '../inputs/Counter';
+import CountrySelect, {
+	type CountrySelectValue,
+} from '../inputs/CountrySelect';
 import Modal from './Modal';
 import useSearchModal from '@/app/hooks/useSearchModal';
 
@@ -21,15 +24,19 @@ enum STEPS {
 	INFO,
 }
 
+type Info = Pick<Listing, 'bathroomCount' | 'guestCount' | 'roomCount'>;
+
 export default function SearchModal() {
 	const router = useRouter();
 	const params = useSearchParams();
 	const searchModal = useSearchModal();
 
 	const [step, setStep] = useState(STEPS.LOCATION);
-	const [guestCount, setGuestCount] = useState(1);
-	const [roomCount, setRoomCount] = useState(1);
-	const [bathroomCount, setBathroomCount] = useState(1);
+	const [info, setInfo] = useState<Info>({
+		guestCount: 1,
+		roomCount: 1,
+		bathroomCount: 1,
+	});
 	const [location, setLocation] = useState<SingleValue<CountrySelectValue>>();
 	const [dateRange, setDateRange] = useState<Range>({
 		startDate: new Date(),
@@ -46,9 +53,7 @@ export default function SearchModal() {
 		const query = {
 			...qs.parse(params?.toString() ?? ''),
 			locationValue: location?.value,
-			guestCount,
-			roomCount,
-			bathroomCount,
+			...info,
 			startDate: dateRange.startDate
 				? formatISO(dateRange.startDate)
 				: undefined,
@@ -96,24 +101,25 @@ export default function SearchModal() {
 		),
 	};
 
-	const infoCounters: CounterProps[] = [
+	const infoCounters: Array<
+		Pick<CounterProps, 'title' | 'subtitle'> & {
+			fieldName: keyof typeof info;
+		}
+	> = [
 		{
 			title: 'Guests',
 			subtitle: 'How many guests are coming?',
-			value: guestCount,
-			onChange: setGuestCount,
+			fieldName: 'guestCount',
 		},
 		{
 			title: 'Rooms',
 			subtitle: 'How many rooms do you need?',
-			value: roomCount,
-			onChange: setRoomCount,
+			fieldName: 'roomCount',
 		},
 		{
 			title: 'Bathrooms',
 			subtitle: 'How many bathrooms do you need?',
-			value: bathroomCount,
-			onChange: setBathroomCount,
+			fieldName: 'bathroomCount',
 		},
 	];
 
@@ -122,8 +128,15 @@ export default function SearchModal() {
 			title: 'More information',
 			subtitle: 'Find your perfect place!',
 		},
-		children: infoCounters.map((counter) => (
-			<Counter key={counter.title} {...counter} />
+		children: infoCounters.map(({ fieldName, ...rest }) => (
+			<Counter
+				key={fieldName}
+				{...rest}
+				value={info[fieldName]}
+				onChange={(value) =>
+					setInfo((prev) => ({ ...prev, [fieldName]: value }))
+				}
+			/>
 		)),
 	};
 
